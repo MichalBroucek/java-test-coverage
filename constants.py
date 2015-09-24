@@ -1,0 +1,30 @@
+__author__ = 'brouk'
+
+"""
+Constants module
+- define files extentions
+- strings which should search for
+"""
+
+FOLDER = "C:\\workspace\\integration-test\\automation-portal\\ehubo..."
+FILE_EXTENTION = ".java"
+
+PACKAGE = "package "
+
+FEATURE = "FEATURE"
+SCENARIO = "SCENARIO"
+GIVEN = "GIVEN"
+TEST_GROUP_LABEL = "@Test"
+
+DESCRIPTION_ITEMS_LIST = ["WHEN",
+               "THEN",
+               "AND"]
+
+SMOKE_TESTS = "EHUBO_SMOKE_TESTS"
+RELEASE_TESTS = "EHUBO_RELEASE_TEST"
+REGRESSION_TESTS = "EHUBO_REGRESSION_TEST"
+ENVIRONMENTAL_TESTS = "EHUBO_ENVIRONMENTAL_TEST"
+IN_PROGRESS_TESTS = "EHUBO_IN_PROGRESS"
+
+TEST_GROUPS = [SMOKE_TESTS, RELEASE_TESTS, REGRESSION_TESTS, ENVIRONMENTAL_TESTS, IN_PROGRESS_TESTS]
+
