@@ -37,5 +37,5 @@ if __name__ == "__main__":
     #     print "Debug: " + file_name
     #     #my_parser.create_test_group_file(test_group, file_name)
 
-    print "Done ..."
+    print "Done."
 
