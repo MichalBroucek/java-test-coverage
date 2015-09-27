@@ -17,6 +17,11 @@ if __name__ == "__main__":
     """
     Parse Ehubo test source files in integration-test project
     """
+
+    # Do GUI - init with empty (default) data
+    # Setup functions and naming for bottoms
+    # Load project folder and display all overview - part of main gui loop ?
+
     # path = "/home/brouk/workspacePython/testCoverage/project-data-src/"
     # path = "/home/brouk/workspacePython/testCoverage/integration-test/automation-portal/src/test/java/nz/co/eroad/automation/tests/ehubo/"
     path = r"""C:\workspace\integration-test\automation-portal\src\test\java\nz\co\eroad\automation\tests\ehubo"""
