@@ -13,7 +13,7 @@ class Coverage_gui():
 
     def __init__(self):
         self.root = Tk()
-        self.root.geometry("600x400")
+        self.root.geometry("750x500")
         self.root.title("Gen2 test coverage")
         self.top_frame = LabelFrame(self.root, borderwidth=1)
         self.top_frame.pack(fill=X, side=TOP, padx=2, pady=2)
@@ -28,6 +28,12 @@ class Coverage_gui():
         self.folder_button.pack(side=RIGHT, padx=4, pady=4)
         self.folder_label = Label(self.top_frame, text="Loaded folder ...", fg="grey")
         self.folder_label.pack(side=RIGHT, padx=4, pady=4)
+
+        self.detail_check_box = Checkbutton(self.left_frame, text="Show details", fg="black")
+        self.detail_check_box.pack(side=TOP, fill=X)
+
+        self.all_tests_button = Button(self.left_frame, text="All tests", fg="black")
+        self.all_tests_button.pack(side=TOP, fill=X)
 
         for b_name in test_groups:
             self.b_name = Button(self.left_frame, text=b_name, fg="black")
