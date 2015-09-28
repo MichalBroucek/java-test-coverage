@@ -1,9 +1,17 @@
+import tkFileDialog
+
 __author__ = 'michal.broucek'
 
 from Tkinter import *
 
 test_groups = ["Smoke tests", "Regression tests", "Release tests", "Environment tests", "Emulator tests"]
 name = "Package "
+
+dir_opt = None
+
+def askdirectory():
+    """Returns a selected directoryname."""
+    return tkFileDialog.askdirectory(**dir_opt)
 
 
 class Coverage_gui():
@@ -24,7 +32,8 @@ class Coverage_gui():
         self.right_frame = LabelFrame(self.bottom_frame, padx=2, pady=2)
         self.right_frame.pack(fill=X, side=TOP)
         # Default configuration of widget
-        self.folder_button = Button(self.top_frame, text="Load project folder ...", fg="black", bd=3)
+        self.folder_button = Button(self.top_frame, text="Load project folder ...", fg="black", bd=3,
+                                    command=askdirectory())
         self.folder_button.pack(side=RIGHT, padx=4, pady=4)
         self.folder_label = Label(self.top_frame, text="Loaded folder ...", fg="grey")
         self.folder_label.pack(side=RIGHT, padx=4, pady=4)
@@ -56,3 +65,6 @@ class Coverage_gui():
 if __name__ == "__main__":
     my_gui = Coverage_gui()
     my_gui.main_gui_loop()
+
+    # Get all buttons as descendant (content) of left frame ...
+    # for ...
