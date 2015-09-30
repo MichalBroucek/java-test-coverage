@@ -1,17 +1,32 @@
-import tkFileDialog
 
 __author__ = 'michal.broucek'
 
+import tkFileDialog
+import constants
+
 from Tkinter import *
+from project_parser import Parser
 
 test_groups = ["Smoke tests", "Regression tests", "Release tests", "Environment tests", "Emulator tests"]
 name = "Package "
 
-dir_opt = None
+dir_opt = {}
+my_parser = None
 
 def askdirectory():
     """Returns a selected directoryname."""
-    return tkFileDialog.askdirectory(**dir_opt)
+    folder = tkFileDialog.askdirectory(**dir_opt)
+    print "Folder: " + folder
+    global my_parser
+    my_parser = Parser(folder, constants.FILE_EXTENTION)
+    my_parser.do_parsing()
+
+    for test_description in my_parser.test_descriptions:
+        print "\n---------------------------------------------------------"
+        print test_description.to_string()
+        print "---------------------------------------------------------\n"
+
+    return
 
 
 class Coverage_gui():
@@ -33,7 +48,7 @@ class Coverage_gui():
         self.right_frame.pack(fill=X, side=TOP)
         # Default configuration of widget
         self.folder_button = Button(self.top_frame, text="Load project folder ...", fg="black", bd=3,
-                                    command=askdirectory())
+                                    command=askdirectory)
         self.folder_button.pack(side=RIGHT, padx=4, pady=4)
         self.folder_label = Label(self.top_frame, text="Loaded folder ...", fg="grey")
         self.folder_label.pack(side=RIGHT, padx=4, pady=4)
