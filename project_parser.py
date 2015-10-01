@@ -200,5 +200,33 @@ class Parser:
         file.write("{0}\n".format(file_description.scenario))
         file.write("{0}\n".format(file_description.given))
 
-    def create_test_group_file(self, group, file_name):
-        pass
+    def get_output(self, group):
+        """
+        Get one long string as test group description
+        :param group:
+        :return:
+        """
+
+        if group is "ALL":
+            string_output = ""
+            for test_description in self.test_descriptions:
+                one_file_output = self.__format_output(test_description)
+                # TODO: Debug
+                print one_file_output
+                if isinstance(one_file_output, basestring):
+                    string_output += self.__format_output(test_description)
+                    string_output += "---------------------------------------------------------\n\n"
+        else:
+            string_output = "Unknown group"
+        return string_output
+
+    def __format_output(self, test_description):
+        """
+        Format output for one file
+        :return:
+        """
+        output = "File name: {0}\n".format(test_description.file_name)
+        output += "Folder name: {0}; Package name: {1}\n".format(test_description.folder_name, test_description.package)
+        output += "\tFeature: {0}\n\tScenario: {1}\n\tGiven: {2}\n".format(test_description.feature, test_description.scenario, test_description.given)
+        return output
+

@@ -13,22 +13,6 @@ name = "Package "
 dir_opt = {}
 my_parser = None
 
-def askdirectory():
-    """Returns a selected directoryname."""
-    folder = tkFileDialog.askdirectory(**dir_opt)
-    print "Folder: " + folder
-    global my_parser
-    my_parser = Parser(folder, constants.FILE_EXTENTION)
-    my_parser.do_parsing()
-
-    for test_description in my_parser.test_descriptions:
-        print "\n---------------------------------------------------------"
-        print test_description.to_string()
-        print "---------------------------------------------------------\n"
-
-    return
-
-
 class Coverage_gui():
     """
     Create GUI for java-test-coverage
@@ -45,10 +29,10 @@ class Coverage_gui():
         self.left_frame = Frame(self.bottom_frame)
         self.left_frame.pack(side=LEFT)
         self.right_frame = LabelFrame(self.bottom_frame, padx=2, pady=2)
-        self.right_frame.pack(fill=X, side=TOP)
+        self.right_frame.pack(fill=X, side=RIGHT)
         # Default configuration of widget
         self.folder_button = Button(self.top_frame, text="Load project folder ...", fg="black", bd=3,
-                                    command=askdirectory)
+                                    command=self.askdirectory)
         self.folder_button.pack(side=RIGHT, padx=4, pady=4)
         self.folder_label = Label(self.top_frame, text="Loaded folder ...", fg="grey")
         self.folder_label.pack(side=RIGHT, padx=4, pady=4)
@@ -68,13 +52,29 @@ class Coverage_gui():
             self.button_name = Button(self.left_frame, text=button_name, fg="black")
             self.button_name.pack(side=TOP, fill=X)
 
-        default_text = "List of test\nwith basic description of tests.\nSeparate by test groups or specific package."
-        self.text_content = Text(self.right_frame)
-        self.text_content.insert(END, default_text)
+        self.text_var = StringVar()
+        self.text_var.set("... test data ...")
+        self.text_content = Label(self.right_frame, textvariable=self.text_var)
         self.text_content.pack(side=RIGHT, padx=2, pady=2)
 
     def main_gui_loop(self):
         self.root.mainloop()
+
+    def askdirectory(self):
+        """Returns a selected directoryname."""
+        folder = tkFileDialog.askdirectory(**dir_opt)
+        print "Folder: " + folder
+        global my_parser
+        my_parser = Parser(folder, constants.FILE_EXTENTION)
+        my_parser.do_parsing()
+        formated_content = my_parser.get_output("ALL")
+        # for test_description in my_parser.test_descriptions:
+        #     print "\n---------------------------------------------------------"
+        #     print test_description.to_string()
+        #     print "---------------------------------------------------------\n"
+        self.text_var.set(formated_content)
+        self.root.update()
+        return
 
 
 if __name__ == "__main__":

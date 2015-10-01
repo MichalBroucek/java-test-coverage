@@ -28,10 +28,10 @@ class TestDescription:
         else:
             return False
 
-
     def to_list(self):
-        return [self.package, self.folder_name, self.file_name, self.test_groups, self.feature, self.scenario, self.given, self.actionList]
+        return [self.package, self.folder_name, self.file_name, self.test_groups, self.feature, self.scenario,
+                self.given, self.actionList]
 
-
+    @property
     def to_string(self):
         return "{0}".format(self.to_list())
