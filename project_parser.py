@@ -7,7 +7,6 @@ import sys
 
 from test_description import TestDescription
 
-
 class Parser:
     """
     Parser class to initialize parsing environment, perform parsing and provide results
@@ -21,6 +20,7 @@ class Parser:
         self.project_path = project_path
         self.file_extension = file_extension
         self.test_descriptions = []
+        self.__line = '--------------------------------------------------------------------------------------------------------------'
 
     def parsing_java_file(self, absoluth_path, directory, file_name):
         """
@@ -98,7 +98,7 @@ class Parser:
         groups_str = line[line.find("{") + 1:line.find("}")]
         groups_str_list = groups_str.split(",")
         for group in groups_str_list:
-            group = group[group.find(".")+1:]
+            group = group[group.find(".") + 1:]
             group_list.append(group)
 
         return group_list
@@ -148,7 +148,7 @@ class Parser:
 
         for description in self.test_descriptions:
             self.__print_one_file_overview(overview_output, description)
-            overview_output.write("-------------------------------------------------------\n\n")
+            overview_output.write(self.__line + "\n\n")
 
         self.__close_file(overview_output)
 
@@ -164,7 +164,7 @@ class Parser:
             self.__print_one_file_overview(complete_output, description)
             for action in description.actionList:
                 complete_output.write("{0}\n".format(action))
-            complete_output.write("-------------------------------------------------------\n\n")
+            complete_output.write(self.__line + "\n\n")
 
         self.__close_file(complete_output)
 
@@ -206,27 +206,76 @@ class Parser:
         :param group:
         :return:
         """
-
-        if group is "ALL":
-            string_output = ""
+        string_output = ""
+        if group == constants.ALL_TESTS:
+            nmb_tests = 0
+            nmb_in_progress_tests = 0
             for test_description in self.test_descriptions:
-                one_file_output = self.__format_output(test_description)
-                # TODO: Debug
-                print one_file_output
+                one_file_output = self.__format_one_file_output(test_description)
                 if isinstance(one_file_output, basestring):
-                    string_output += self.__format_output(test_description)
-                    string_output += "---------------------------------------------------------\n\n"
+                    string_output += self.__format_one_file_output(test_description)
+                    string_output = string_output + self.__line + "\n\n"
+                    nmb_tests += 1
+                if constants.IN_PROGRESS_TESTS in test_description.test_groups:
+                    nmb_in_progress_tests += 1
+            test_group_summary = "*** {0} tests in total ({1} in progress tests) ***".format(nmb_tests,
+                                                                                             nmb_in_progress_tests)
+            test_group_summary += "\n" + self.__line + "\n\n"
+            string_output = test_group_summary + string_output
+
+        elif group == constants.SMOKE_TESTS:
+            print "SMOKE TESTS PRINTING ..."
+            string_output = self.__get_test_group_output(constants.SMOKE_TESTS)
+        elif group == constants.REGRESSION_TESTS:
+            print "REGRESSION TESTS PRINTING ..."
+            string_output = self.__get_test_group_output(constants.REGRESSION_TESTS)
+        elif group == constants.RELEASE_TESTS:
+            print "RELEASE TESTS PRINTING ..."
+            string_output = self.__get_test_group_output(constants.RELEASE_TESTS)
+        elif group == constants.ENVIRONMENTAL_TESTS:
+            print "ENVIRONMENTAL TESTS PRINTING ..."
+            string_output = self.__get_test_group_output(constants.ENVIRONMENTAL_TESTS)
+        elif group == constants.EMULATOR_TESTS:
+            print "EMULATOR TESTS PRINTING ..."
+            string_output = self.__get_test_group_output(constants.EMULATOR_TESTS)
+        elif group == constants.IN_PROGRESS_TESTS:
+            print "IN PROGRESS TESTS PRINTING ..."
+            string_output = self.__get_test_group_output(constants.IN_PROGRESS_TESTS)
         else:
             string_output = "Unknown group"
         return string_output
 
-    def __format_output(self, test_description):
+    def __format_one_file_output(self, test_description):
         """
         Format output for one file
         :return:
         """
         output = "File name: {0}\n".format(test_description.file_name)
-        output += "Folder name: {0}; Package name: {1}\n".format(test_description.folder_name, test_description.package)
-        output += "\tFeature: {0}\n\tScenario: {1}\n\tGiven: {2}\n".format(test_description.feature, test_description.scenario, test_description.given)
+        output += "Folder name: {0};\tPackage name: {1}\n".format(test_description.folder_name,
+                                                                  test_description.package)
+        output += "\t{0}\n\t{1}\n\t{2}\n".format(test_description.feature, test_description.scenario,
+                                                 test_description.given)
         return output
 
+    def __get_test_group_output(self, test_group):
+        """
+        Format output as one string for whole test group
+        :param test_group:
+        :return:
+        """
+        string_output = ""
+        nmb_tests = 0
+        nmb_in_progress_tests = 0
+        for test_description in self.test_descriptions:
+            if test_group in test_description.test_groups:
+                one_file_output = self.__format_one_file_output(test_description)
+                if isinstance(one_file_output, basestring):
+                    string_output += one_file_output
+                    string_output += self.__line + "\n\n"
+                    nmb_tests += 1
+                if constants.IN_PROGRESS_TESTS in test_description.test_groups:
+                    nmb_in_progress_tests += 1
+        test_group_summary = "*** {0} tests in {1} group ({2} in progress tests) ***".format(nmb_tests, test_group,
+                                                                                             nmb_in_progress_tests)
+        test_group_summary += "\n" + self.__line + "\n\n"
+        return test_group_summary + string_output
