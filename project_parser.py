@@ -1,11 +1,13 @@
 #!/usr/bin/env python
-__author__ = 'brouk'
 
 import constants
 import os
 import sys
 
 from test_description import TestDescription
+
+__author__ = 'michal.broucek'
+
 
 class Parser:
     """

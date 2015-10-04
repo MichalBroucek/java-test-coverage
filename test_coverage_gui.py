@@ -1,12 +1,12 @@
 
-__author__ = 'michal.broucek'
-
 import time
 from Tkinter import *
 
 import tkFileDialog
 import constants
 from project_parser import Parser
+
+__author__ = 'michal.broucek'
 
 test_groups = ["Smoke tests", "Regression tests", "Release tests", "Environment tests", "Emulator tests"]
 name = "Package "
@@ -175,6 +175,3 @@ class Coverage_gui():
 if __name__ == "__main__":
     my_gui = Coverage_gui()
     my_gui.main_gui_loop()
-
-    # Get all buttons as descendant (content) of left frame ...
-    # for ...

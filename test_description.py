@@ -1,5 +1,5 @@
-__author__ = 'brouk'
 
+__author__ = 'michal.broucek'
 
 class TestDescription:
     """
