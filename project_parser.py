@@ -20,7 +20,7 @@ class Parser:
         self.project_path = project_path
         self.file_extension = file_extension
         self.test_descriptions = []
-        self.__line = '--------------------------------------------------------------------------------------------------------------'
+        self.__line = '----------------------------------------------------------------------------------------------------'
 
     def parsing_java_file(self, absoluth_path, directory, file_name):
         """
