@@ -240,6 +240,9 @@ class Parser:
         elif group == constants.EMULATOR_TESTS:
             print "EMULATOR TESTS PRINTING ..."
             string_output = self.__get_test_group_output(constants.EMULATOR_TESTS)
+        elif group == constants.SIMULATOR_TESTS:
+            print "SIMULATOR TESTS PRINTING ..."
+            string_output = self.__get_test_group_output(constants.SIMULATOR_TESTS)
         elif group == constants.IN_PROGRESS_TESTS:
             print "IN PROGRESS TESTS PRINTING ..."
             string_output = self.__get_test_group_output(constants.IN_PROGRESS_TESTS)

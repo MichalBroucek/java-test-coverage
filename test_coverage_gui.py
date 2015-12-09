@@ -8,7 +8,6 @@ from project_parser import Parser
 
 __author__ = 'michal.broucek'
 
-test_groups = ["Smoke tests", "Regression tests", "Release tests", "Environment tests", "Emulator tests"]
 name = "Package "
 
 class Coverage_gui():
@@ -52,6 +51,8 @@ class Coverage_gui():
         self.environment_test_button.pack(side=TOP)
         self.emulator_test_button = Button(self.left_frame, text="Emulator tests", fg="black", state=DISABLED, width=20)
         self.emulator_test_button.pack(side=TOP)
+        self.simulator_test_button = Button(self.left_frame, text="Simulator tests", fg="black", state=DISABLED, width=20)
+        self.simulator_test_button.pack(side=TOP)
         self.in_progress_test_button = Button(self.left_frame, text="In progress tests", fg="black", state=DISABLED, width=20)
         self.in_progress_test_button.pack(side=TOP)
         # Text area with scrollbar
@@ -91,6 +92,7 @@ class Coverage_gui():
         self.regression_test_button['command'] = self.regression_tests
         self.emulator_test_button['command'] = self.emulator_tests
         self.environment_test_button['command'] = self.environment_tests
+        self.simulator_test_button['command'] = self.simulator_tests
         self.in_progress_test_button['command'] = self.in_progress_tests
 
         # Activate all buttons
@@ -154,6 +156,14 @@ class Coverage_gui():
         :return:
         """
         self.__update_tests_overview(constants.ENVIRONMENTAL_TESTS)
+        return
+
+    def simulator_tests(self):
+        """
+        Display only simulator tests
+        :return:
+        """
+        self.__update_tests_overview(constants.SIMULATOR_TESTS)
         return
 
     def emulator_tests(self):
