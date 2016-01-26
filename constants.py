@@ -7,7 +7,6 @@ Constants module
 - strings which should search for
 """
 
-FOLDER = "C:\\workspace\\integration-test\\automation-portal\\ehubo..."
 FILE_EXTENTION = ".java"
 
 PACKAGE = "package "
