@@ -4,6 +4,7 @@ from Tkinter import *
 
 import tkFileDialog
 import constants
+import data_io
 from project_parser import Parser
 
 __author__ = 'michal.broucek'
@@ -15,7 +16,10 @@ class Coverage_gui():
     Create GUI for java-test-coverage
     """
 
-    def __init__(self):
+    def __init__(self, parsing_folder_name):
+
+        self.folder_name = parsing_folder_name
+
         self.my_parser = None
         self.root = Tk()
         self.root.geometry("1000x600")
@@ -66,15 +70,19 @@ class Coverage_gui():
 
         self.scrollbar.config(command=self.text_widget.yview)
 
-    def main_gui_loop(self):
-        self.root.mainloop()
+    def __activate_all_buttons(self):
+        """
+        Activate all gui buttons if parsing folder is known
+        :return:
+        """
+        if self.folder_name:
+            for my_button in self.left_frame.children.values():
+                my_button['state'] = NORMAL
+            self.root.update()
+        else:
+            pass
 
-    def askdirectory(self):
-        """Load and parse project directory with updating gui"""
-        dir_opt = {}
-        folder = tkFileDialog.askdirectory(**dir_opt)
-        print "Folder: " + folder
-        self.my_parser = Parser(folder, constants.FILE_EXTENTION)
+    def __update_gui_after_parsing(self):
         # Update label
         self.label_text.set(self.my_parser.project_path)
         self.root.update()
@@ -95,10 +103,24 @@ class Coverage_gui():
         self.simulator_test_button['command'] = self.simulator_tests
         self.in_progress_test_button['command'] = self.in_progress_tests
 
-        # Activate all buttons
-        for my_button in self.left_frame.children.values():
-            my_button['state'] = NORMAL
-        self.root.update()
+    def main_gui_loop(self):
+        # Activate main gui loop
+        self.my_parser = Parser(self.folder_name, constants.FILE_EXTENTION)
+        self.__update_gui_after_parsing()
+        self.__activate_all_buttons()
+        self.root.mainloop()
+
+    def askdirectory(self):
+        """Load and parse project directory with updating gui"""
+        dir_opt = {}
+        folder = tkFileDialog.askdirectory(**dir_opt)
+        print "Folder: " + folder
+        self.my_parser = Parser(folder, constants.FILE_EXTENTION)
+        self.__update_gui_after_parsing()
+        # Save folder name for next call
+        self.folder_name = folder
+        data_io.save_parsing_folder(self.folder_name)
+        self.__activate_all_buttons()
         return
 
     def __update_tests_overview(self, test_group):
