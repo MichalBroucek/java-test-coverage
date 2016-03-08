@@ -246,6 +246,79 @@ class Parser:
         elif group == constants.IN_PROGRESS_TESTS:
             print "IN PROGRESS TESTS PRINTING ..."
             string_output = self.__get_test_group_output(constants.IN_PROGRESS_TESTS)
+        # New Gen2 feature groups
+        elif group == constants.OTAP_TESTS:
+            print "OTAP TESTS PRINTING ..."
+            string_output = self.__get_test_group_output(constants.OTAP_TESTS)
+        elif group == constants.GPS_TESTS:
+            print "GPS TESTS PRINTING ..."
+            string_output = self.__get_test_group_output(constants.GPS_TESTS)
+        elif group == constants.MODEM_TESTS:
+            print "MODEM TESTS PRINTING ..."
+            string_output = self.__get_test_group_output(constants.MODEM_TESTS)
+        elif group == constants.BLUETOOTH_TESTS:
+            print "BLUETOOTH TESTS PRINTING ..."
+            string_output = self.__get_test_group_output(constants.BLUETOOTH_TESTS)
+        elif group == constants.IO_TESTS:
+            print "IO TESTS PRINTING ..."
+            string_output = self.__get_test_group_output(constants.IO_TESTS)
+        elif group == constants.CAN_TESTS:
+            print "CAN TESTS PRINTING ..."
+            string_output = self.__get_test_group_output(constants.CAN_TESTS)
+        elif group == constants.DISTANCE_TESTS:
+            print "DISTANCE TESTS PRINTING ..."
+            string_output = self.__get_test_group_output(constants.DISTANCE_TESTS)
+        elif group == constants.MEMS_TESTS:
+            print "MEMS TESTS PRINTING ..."
+            string_output = self.__get_test_group_output(constants.MEMS_TESTS)
+        elif group == constants.BATTERY_TESTS:
+            print "BATTERY TESTS PRINTING ..."
+            string_output = self.__get_test_group_output(constants.BATTERY_TESTS)
+        elif group == constants.LIFECYCLE_TESTS:
+            print "LIFECYCLE TESTS PRINTING ..."
+            string_output = self.__get_test_group_output(constants.LIFECYCLE_TESTS)
+        elif group == constants.STORAGE_TESTS:
+            print "STORAGE TESTS PRINTING ..."
+            string_output = self.__get_test_group_output(constants.STORAGE_TESTS)
+        elif group == constants.DEGRADED_TESTS:
+            print "DEGRADED TESTS PRINTING ..."
+            string_output = self.__get_test_group_output(constants.DEGRADED_TESTS)
+        elif group == constants.SECURITY_TESTS:
+            print "SECURITY TESTS PRINTING ..."
+            string_output = self.__get_test_group_output(constants.SECURITY_TESTS)
+        elif group == constants.TAMPER_TESTS:
+            print "TAMPER TESTS PRINTING ..."
+            string_output = self.__get_test_group_output(constants.TAMPER_TESTS)
+        elif group == constants.TEMPERATURE_TESTS:
+            print "TEMPERATURE TESTS PRINTING ..."
+            string_output = self.__get_test_group_output(constants.TEMPERATURE_TESTS)
+        elif group == constants.ASSETTRACKER_TESTS:
+            print "ASSETTRACKER TESTS PRINTING ..."
+            string_output = self.__get_test_group_output(constants.ASSETTRACKER_TESTS)
+        elif group == constants.INSTALLWIZARD_TESTS:
+            print "INSTALLWIZARD TESTS PRINTING ..."
+            string_output = self.__get_test_group_output(constants.INSTALLWIZARD_TESTS)
+        elif group == constants.STABILITY_TESTS:
+            print "STABILITY TESTS PRINTING ..."
+            string_output = self.__get_test_group_output(constants.STABILITY_TESTS)
+        elif group == constants.PERFORMANCE_TESTS:
+            print "PERFORMANCE TESTS PRINTING ..."
+            string_output = self.__get_test_group_output(constants.PERFORMANCE_TESTS)
+        elif group == constants.DRIVEBUDDY_TESTS:
+            print "DRIVEBUDDY TESTS PRINTING ..."
+            string_output = self.__get_test_group_output(constants.DRIVEBUDDY_TESTS)
+        elif group == constants.RUC_TESTS:
+            print "RUC TESTS PRINTING ..."
+            string_output = self.__get_test_group_output(constants.RUC_TESTS)
+        elif group == constants.UI_TESTS:
+            print "UI TESTS PRINTING ..."
+            string_output = self.__get_test_group_output(constants.UI_TESTS)
+        elif group == constants.ENDTOEND_TESTS:
+            print "END-TO-END TESTS PRINTING ..."
+            string_output = self.__get_test_group_output(constants.ENDTOEND_TESTS)
+        elif group == constants.OTHER_TESTS:
+            print "OTHER TESTS PRINTING ..."
+            string_output = self.__get_test_group_output(constants.OTHER_TESTS)
         else:
             string_output = "Unknown group"
         return string_output
