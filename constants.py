@@ -8,6 +8,7 @@ Constants module
 """
 
 PARSING_FOLDER_FILE_NAME_STORAGE="folder_to_parse_name.txt"
+JENKINS_PLOT_OUTPUT_FILE="test_coverage_data.csv"
 
 FILE_EXTENTION = ".java"
 

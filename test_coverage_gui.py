@@ -1,8 +1,11 @@
 
-import time
-from Tkinter import *
+try:
+    from Tkinter import *
+    import tkFileDialog
+except ImportError:
+    print "Warning GUI interface will not work as gui (Tkinter,tkFileDialog) python packages are missing!"
 
-import tkFileDialog
+import time
 import constants
 import data_io
 from project_parser import Parser
@@ -108,7 +111,6 @@ class Coverage_gui():
         self.endtoend_test_button.pack(side=TOP)
         self.other_test_button = Button(self.left_frame, text="Other tests", fg="black", state=DISABLED, width=20)
         self.other_test_button.pack(side=TOP)
-
 
         # Text area with scrollbar
         self.text_var = StringVar()

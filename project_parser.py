@@ -357,3 +357,85 @@ class Parser:
                                                                                              nmb_in_progress_tests)
         test_group_summary += "\n" + self.__line + "\n\n"
         return test_group_summary + string_output
+
+    def print_jenkins_test_group_list(self, detail):
+        """
+        Format output as one string for Jenkins console output
+        :param test_group:  group of test
+        :param detail       just list of tests or with detail
+        :return:
+        """
+        for one_test_group in constants.TEST_GROUPS:
+            one_group_output = ""
+            nmb_tests = 0
+            nmb_in_progress_tests = 0
+
+            for test_description in self.test_descriptions:
+                if one_test_group in test_description.test_groups:
+                    one_group_output += test_description.file_name + "\n"
+                    nmb_tests += 1
+
+                    if detail:
+                        one_group_output += "\t\t" + test_description.feature + "\n"
+                        one_group_output += "\t\t" + test_description.scenario + "\n"
+
+                    if constants.IN_PROGRESS_TESTS in test_description.test_groups:
+                        nmb_in_progress_tests += 1
+
+            test_group_summary = "*** {0} tests in {1} group ({2} in progress tests) ***\n\n".format(nmb_tests, one_test_group,
+                                                                                                 nmb_in_progress_tests)
+            print test_group_summary + one_group_output
+            print "-------------------------------------------------------------------------------------\n\n"
+
+
+    def generate_graph_data(self, test_parser, output_file):
+        """
+        Generate *.csv file for Jenkins plot plugin - info about number of tests in different test groups
+        :param test_parser: Parser object (includes list of tests with additional info)
+        :param output_file: *.csv output file
+        :return:
+        """
+        print "Generating *.csv output file"
+        group_names = []
+        group_tests_nmb = []
+
+        # go through all groups and all tests and count
+        for one_test_group in constants.TEST_GROUPS:
+            nmb_tests = 0
+            nmb_in_progress_tests = 0
+
+            if one_test_group in [constants.SMOKE_TESTS, constants.ENVIRONMENTAL_TESTS, constants.REGRESSION_TESTS,
+                                  constants.RELEASE_TESTS, constants.IN_PROGRESS_TESTS, constants.EMULATOR_TESTS,
+                                  constants.SIMULATOR_TESTS]:
+                continue
+
+            for test_description in self.test_descriptions:
+                if one_test_group in test_description.test_groups:
+                    nmb_tests += 1
+
+                    if constants.IN_PROGRESS_TESTS in test_description.test_groups:
+                        nmb_in_progress_tests += 1
+
+            one_group_name = one_test_group + " {0}/{1}".format(nmb_tests, nmb_in_progress_tests)
+            group_names.append(one_group_name)
+            group_tests_nmb.append(nmb_tests)
+
+            if len(group_names) != len(group_tests_nmb):
+                print "Warning! Different numbers of Group names nad values!"
+
+        first_csv_line = ""
+        for name in group_names:
+            first_csv_line += name + ","
+
+        second_csv_line = ""
+        for test_nmb in group_tests_nmb:
+            second_csv_line += str(test_nmb) + ","
+
+        print "First CSV line: ", first_csv_line
+        print "Second CSV line: ", second_csv_line
+
+        data_to_save = first_csv_line + "\n" + second_csv_line
+        with open(output_file, 'w') as folder_file:
+            folder_file.write(data_to_save)
+
+
