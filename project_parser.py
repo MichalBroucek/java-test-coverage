@@ -370,6 +370,11 @@ class Parser:
             nmb_tests = 0
             nmb_in_progress_tests = 0
 
+            if one_test_group in [constants.SMOKE_TESTS, constants.ENVIRONMENTAL_TESTS, constants.REGRESSION_TESTS,
+                                  constants.RELEASE_TESTS, constants.IN_PROGRESS_TESTS, constants.EMULATOR_TESTS,
+                                  constants.SIMULATOR_TESTS]:
+                continue
+
             for test_description in self.test_descriptions:
                 if one_test_group in test_description.test_groups:
                     one_group_output += test_description.file_name + "\n"
