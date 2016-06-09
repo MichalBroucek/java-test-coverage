@@ -370,10 +370,10 @@ class Parser:
             nmb_tests = 0
             nmb_in_progress_tests = 0
 
-            if one_test_group in [constants.SMOKE_TESTS, constants.ENVIRONMENTAL_TESTS, constants.REGRESSION_TESTS,
-                                  constants.RELEASE_TESTS, constants.IN_PROGRESS_TESTS, constants.EMULATOR_TESTS,
-                                  constants.SIMULATOR_TESTS]:
-                continue
+            # if one_test_group in [constants.SMOKE_TESTS, constants.ENVIRONMENTAL_TESTS, constants.REGRESSION_TESTS,
+            #                       constants.RELEASE_TESTS, constants.IN_PROGRESS_TESTS, constants.EMULATOR_TESTS,
+            #                       constants.SIMULATOR_TESTS]:
+            #     continue
 
             for test_description in self.test_descriptions:
                 if one_test_group in test_description.test_groups:
@@ -383,6 +383,9 @@ class Parser:
                     if detail:
                         one_group_output += "\t\t" + test_description.feature + "\n"
                         one_group_output += "\t\t" + test_description.scenario + "\n"
+                        one_group_output += "\t\t\t" + test_description.given + "\n"
+                        for item in test_description.actionList:
+                            one_group_output += "\t\t\t" + item + "\n"
 
                     if constants.IN_PROGRESS_TESTS in test_description.test_groups:
                         nmb_in_progress_tests += 1
