@@ -381,11 +381,11 @@ class Parser:
                     nmb_tests += 1
 
                     if detail:
-                        one_group_output += "\t\t" + test_description.feature + "\n"
-                        one_group_output += "\t\t" + test_description.scenario + "\n"
-                        one_group_output += "\t\t\t" + test_description.given + "\n"
+                        one_group_output += "\t" + test_description.feature + "\n"
+                        one_group_output += "\t" + test_description.scenario + "\n"
+                        one_group_output += "\t\t" + test_description.given + "\n"
                         for item in test_description.actionList:
-                            one_group_output += "\t\t\t" + item + "\n"
+                            one_group_output += "\t\t" + item + "\n"
 
                     if constants.IN_PROGRESS_TESTS in test_description.test_groups:
                         nmb_in_progress_tests += 1
