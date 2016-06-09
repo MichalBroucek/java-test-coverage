@@ -377,11 +377,11 @@ class Parser:
 
             for test_description in self.test_descriptions:
                 if one_test_group in test_description.test_groups:
-                    one_group_output += test_description.file_name + "\n"
+                    #one_group_output += test_description.file_name + "\n"
                     nmb_tests += 1
 
                     if detail:
-                        one_group_output += "\t" + test_description.feature + "\n"
+                        one_group_output += "\t" + test_description.feature + "  [" + test_description.file_name + "]\n"
                         one_group_output += "\t" + test_description.scenario + "\n"
                         one_group_output += "\t\t" + test_description.given + "\n"
                         for item in test_description.actionList:
