@@ -3,6 +3,7 @@
 import constants
 import os
 import sys
+from prettytable import PrettyTable
 
 from test_description import TestDescription
 
@@ -361,23 +362,21 @@ class Parser:
     def print_jenkins_test_group_list(self, detail):
         """
         Format output as one string for Jenkins console output
-        :param test_group:  group of test
         :param detail       just list of tests or with detail
         :return:
         """
+
+        print "\n*** TEST GROUPS OVERVIEW ***\n"
+        print self.generateOverviewTable()
+        print "\n\n"
+
         for one_test_group in constants.TEST_GROUPS:
             one_group_output = ""
             nmb_tests = 0
             nmb_in_progress_tests = 0
 
-            # if one_test_group in [constants.SMOKE_TESTS, constants.ENVIRONMENTAL_TESTS, constants.REGRESSION_TESTS,
-            #                       constants.RELEASE_TESTS, constants.IN_PROGRESS_TESTS, constants.EMULATOR_TESTS,
-            #                       constants.SIMULATOR_TESTS]:
-            #     continue
-
             for test_description in self.test_descriptions:
                 if one_test_group in test_description.test_groups:
-                    #one_group_output += test_description.file_name + "\n"
                     nmb_tests += 1
 
                     if detail:
@@ -386,15 +385,35 @@ class Parser:
                         one_group_output += "\t\t" + test_description.given + "\n"
                         for item in test_description.actionList:
                             one_group_output += "\t\t" + item + "\n"
+                        one_group_output += "\n"
 
                     if constants.IN_PROGRESS_TESTS in test_description.test_groups:
                         nmb_in_progress_tests += 1
 
-            test_group_summary = "*** {0} tests in {1} group ({2} in progress tests) ***\n\n".format(nmb_tests, one_test_group,
-                                                                                                 nmb_in_progress_tests)
+            test_group_summary = "*** {0} tests in {1} group ({2} in progress tests) ***\n\n".format(nmb_tests,
+                                                                                                     one_test_group,
+                                                                                                     nmb_in_progress_tests)
             print test_group_summary + one_group_output
             print "-------------------------------------------------------------------------------------\n\n"
 
+    def generateOverviewTable(self):
+        """
+        Generate Test Groups Overview Table to be able to printout this in cmd or file
+        :return: PrettyTable of test groups and number of tests
+        """
+        overview_table = PrettyTable(['Test group', 'Number of tests', 'Number of tests in progress'])
+        for one_test_group in constants.TEST_GROUPS:
+            nmb_tests_overview = 0
+            nmb_tests_overview_inprogress = 0
+            for test_description in self.test_descriptions:
+                if one_test_group in test_description.test_groups:
+                    nmb_tests_overview += 1
+                    if constants.IN_PROGRESS_TESTS in test_description.test_groups:
+                        nmb_tests_overview_inprogress += 1
+
+            overview_table.add_row([one_test_group, nmb_tests_overview, nmb_tests_overview_inprogress])
+
+        return overview_table
 
     def generate_graph_data(self, test_parser, output_file):
         """
@@ -445,5 +464,3 @@ class Parser:
         data_to_save = first_csv_line + "\n" + second_csv_line
         with open(output_file, 'w') as folder_file:
             folder_file.write(data_to_save)
-
-
